@@ -70,20 +70,23 @@ const CardCarousel = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [visibleCount, setVisibleCount] = useState(3);
     const sectionRef = useRef(null);
+    const maxIndex = Math.max(modules.length - visibleCount, 0);
+    const safeCurrentIndex = Math.min(currentIndex, maxIndex);
 
     const nextSlide = () => {
-        setCurrentIndex((prev) =>
-            prev + 1 >= modules.length - (visibleCount - 1) ? 0 : prev + 1
+        setCurrentIndex(() =>
+            safeCurrentIndex + 1 > maxIndex ? 0 : safeCurrentIndex + 1
         );
     };
 
     const prevSlide = () => {
-        setCurrentIndex((prev) =>
-            prev === 0 ? modules.length - visibleCount : prev - 1
+        setCurrentIndex(() =>
+            safeCurrentIndex === 0 ? maxIndex : safeCurrentIndex - 1
         );
     };
 
     useEffect(() => {
+        const currentSection = sectionRef.current;
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -94,13 +97,13 @@ const CardCarousel = () => {
             { threshold: 0.2 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
+        if (currentSection) {
+            observer.observe(currentSection);
         }
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
+            if (currentSection) {
+                observer.unobserve(currentSection);
             }
         };
     }, []);
@@ -126,13 +129,6 @@ const CardCarousel = () => {
         return () => window.removeEventListener('resize', updateVisibleCount);
     }, []);
 
-    useEffect(() => {
-        setCurrentIndex((prev) => {
-            const maxIndex = Math.max(modules.length - visibleCount, 0);
-            return Math.min(prev, maxIndex);
-        });
-    }, [visibleCount, modules.length]);
-
     return (
         <div ref={sectionRef} className="bg-custom-banner-gray overflow-hidden relative">
             <SectionHeader title="Программа практикума"/>
@@ -143,7 +139,7 @@ const CardCarousel = () => {
                 <div className="overflow-hidden px-2 sm:px-4 xl:px-0">
                     <div
                         className="flex transition-transform duration-500 ease-out"
-                        style={{ transform: `translateX(-${currentIndex * (100 / visibleCount)}%)` }}
+                        style={{ transform: `translateX(-${safeCurrentIndex * (100 / visibleCount)}%)` }}
                     >
                         {modules.map((mod, idx) => (
                             <motion.div

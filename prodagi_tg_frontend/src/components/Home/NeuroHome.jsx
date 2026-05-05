@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { motion } from "motion/react";
 import { Link } from 'react-router-dom';
 import SectionHeader from "../common/SectionHeader.jsx";
@@ -29,6 +30,10 @@ const NeuroIcon = ({ type }) => {
         )
     };
     return icons[type] || null;
+};
+
+NeuroIcon.propTypes = {
+    type: PropTypes.oneOf(['live', 'database', 'robot', 'users']).isRequired
 };
 
 export default function NeuroHome() {

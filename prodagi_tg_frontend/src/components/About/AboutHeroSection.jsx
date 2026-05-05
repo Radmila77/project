@@ -37,13 +37,13 @@ const AboutHeroSection = () => {
                         </div>
                     </div>
 
-                    <div className="relative flex min-h-[360px] flex-col items-center gap-6 pt-2 sm:min-h-[420px] lg:min-h-[460px] lg:justify-end">
+                    <div className="relative flex min-h-[360px] flex-col items-center gap-6 pt-2 sm:min-h-[420px] xl:min-h-[460px] xl:justify-end">
                         <div className="h-[300px] w-full max-w-[280px] overflow-hidden rounded-[32px] sm:h-[360px] sm:max-w-[320px]">
                             <img src={MeImage} alt="Фото about" className="w-full h-full object-cover"/>
                         </div>
 
 
-                        <div className="relative z-20 w-full max-w-[260px] rounded-[32px] bg-custom-bkred p-5 text-white shadow-[0_28px_80px_rgba(125,15,23,0.18)] sm:max-w-[280px] sm:p-6 lg:absolute lg:bottom-0 lg:left-0 lg:translate-x-0 2xl:-left-8 2xl:-bottom-6">
+                        <div className="relative z-20 mt-2 w-full max-w-[260px] rounded-[32px] bg-custom-bkred p-5 text-white shadow-[0_28px_80px_rgba(125,15,23,0.18)] sm:max-w-[280px] sm:p-6 xl:absolute xl:-bottom-5 xl:-left-10 xl:mt-0 xl:translate-x-0 2xl:-left-8 2xl:-bottom-6">
                             <p className="text-xs font-exo font-bold uppercase tracking-[0.22em] text-white/55 mb-4">
                                 Почему мне доверяют
                             </p>

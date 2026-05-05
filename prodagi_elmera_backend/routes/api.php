@@ -19,4 +19,3 @@ Route::post('/questionnaires', [QuestionnaireController::class, 'store']);
 
 Route::post('/orders', [OrderController::class, 'store']);
 Route::post('/orders/prodamus/webhook', [OrderController::class, 'webhook']);
-Route::get('/orders/test-telegram', [OrderController::class, 'testTelegram']);

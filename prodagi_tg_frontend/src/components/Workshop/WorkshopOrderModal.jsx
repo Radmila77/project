@@ -144,7 +144,7 @@ const WorkshopOrderModal = ({ plan, onClose }) => {
                                 name="telegram"
                                 value={values.telegram}
                                 onChange={handleChange}
-                                placeholder="@username"
+                                placeholder="@никнейм"
                                 className={`w-full rounded-[22px] border bg-white px-5 py-4 text-base text-custom-bkred outline-none transition-all ${
                                     errors.telegram
                                         ? 'border-[#c24646]/70 focus:border-[#c24646] focus:ring-4 focus:ring-[#c24646]/10'

@@ -12,7 +12,7 @@ const reviewFilters = [
 
 export default function ReviewsHome() {
     const [reviews, setReviews] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(3);
     const [expandedReviews, setExpandedReviews] = useState({});
     const [isReviewFormOpen, setIsReviewFormOpen] = useState(false);
@@ -23,8 +23,6 @@ export default function ReviewsHome() {
     useEffect(() => {
         const currentFilter = reviewFilters.find((filter) => filter.id === activeFilter);
         const params = currentFilter?.apiValue ? { tariff: currentFilter.apiValue } : {};
-
-        setLoading(true);
 
         api.get('/reviews', { params })
             .then((response) => {
@@ -54,17 +52,9 @@ export default function ReviewsHome() {
 
     const handleReviewSubmit = async (formValues) => {
         try {
-            const response = await api.post('/reviews', formValues);
-            const createdReview = response.data;
-            const createdTariffKey = createdReview.tariff?.key ?? null;
-            const activeFilterValue = reviewFilters.find((filter) => filter.id === activeFilter)?.apiValue ?? null;
+            await api.post('/reviews', formValues);
 
             setReviewFormErrors({});
-            setReviews((current) => (
-                !activeFilterValue || activeFilterValue === createdTariffKey
-                    ? [createdReview, ...current]
-                    : current
-            ));
             setIsReviewFormOpen(false);
             setShowSuccessModal(true);
         } catch (error) {
@@ -150,6 +140,7 @@ export default function ReviewsHome() {
                                 key={filter.id}
                                 type="button"
                                 onClick={() => {
+                                    setLoading(true);
                                     setActiveFilter(filter.id);
                                     setVisibleCount(3);
                                 }}

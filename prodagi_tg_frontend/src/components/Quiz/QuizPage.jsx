@@ -341,7 +341,7 @@ const QuizPage = () => {
                                                     name="telegram"
                                                     value={leadForm.telegram}
                                                     onChange={handleLeadFormChange}
-                                                    placeholder="@ваш_nick"
+                                                    placeholder="@никнейм"
                                                     className={`w-full rounded-[20px] bg-[#fff8f6] px-5 py-4 text-base text-custom-bkred outline-none transition-colors placeholder:text-custom-gray/55 ${
                                                         leadFormErrors.telegram
                                                             ? 'border border-[#c24646]/70 focus:border-[#c24646]'

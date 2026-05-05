@@ -13,6 +13,7 @@ class ReviewController extends Controller
     {
         $reviews = Review::query()
             ->with('tariff')
+            ->where('is_published', true)
             ->when(
                 request('tariff_id'),
                 fn ($query, $tariffId) => $query->where('tariff_id', $tariffId)
@@ -33,7 +34,11 @@ class ReviewController extends Controller
 
     public function store(ReviewRequest $request)
     {
-        $review = Review::create($request->validated())->load('tariff');
+        $review = Review::create([
+            ...$request->validated(),
+            'is_published' => false,
+            'publication_status' => 'pending',
+        ])->load('tariff');
 
         return response()->json($review);
     }

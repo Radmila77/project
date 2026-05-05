@@ -81,7 +81,7 @@ const WorkshopPricing = () => {
                             className={`relative flex flex-col justify-between rounded-[36px] p-6 md:p-8 xl:p-10 ${plan.accent}`}
                         >
                             <div>
-                                <div className="flex items-center justify-between gap-4 mb-8">
+                                <div className="mb-8 flex flex-col items-start gap-4 sm:flex-row sm:items-start sm:justify-between">
                                     <div>
                                         <p className="text-xs font-bold uppercase tracking-[0.28em] text-custom-red mb-3">
                                             {plan.label}
@@ -91,7 +91,7 @@ const WorkshopPricing = () => {
                                         </h3>
                                     </div>
 
-                                    <div className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.22em] ${plan.featured ? 'bg-custom-red text-white' : 'bg-[#eef0ea] text-[#506246]'}`}>
+                                    <div className={`w-full max-w-full rounded-2xl px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[0.14em] break-words whitespace-normal sm:w-auto sm:max-w-[220px] sm:rounded-full sm:text-xs sm:tracking-[0.18em] ${plan.featured ? 'bg-custom-red text-white' : 'bg-[#eef0ea] text-[#506246]'}`}>
                                         {plan.badge}
                                     </div>
                                 </div>

@@ -10,22 +10,22 @@ const Banner = () => {
 
             <div className="absolute inset-0 bg-custom-banner-gray -z-10"></div>
 
-            <div className="absolute right-0 top-24 z-0 hidden xl:block xl:top-auto xl:bottom-115 2xl:right-100 2xl:bottom-105">
+            <div className="absolute right-0 top-24 z-0 hidden xl:block xl:top-auto xl:bottom-115 2xl:right-30 2xl:bottom-105">
                 <AnimatedSvg/>
             </div>
 
-            <div className="absolute right-0 top-6 z-10 hidden xl:block xl:pr-10 2xl:right-100 2xl:pr-12">
-                <Elmera className="h-auto w-[400px] max-w-full 2xl:w-[400px]" />
+            <div className="absolute right-0 top-6 z-10 hidden xl:block xl:pr-10 2xl:right-40 2xl:pr-0">
+                <Elmera className="h-auto w-[400px] max-w-full" />
             </div>
 
             <motion.div
-                className="absolute left-4 top-8 z-0 h-20 w-20 rounded-full bg-custom-circle-small opacity-40 md:left-10 md:top-10 md:h-32 md:w-32 2xl:left-100 2xl:top-12"
+                className="absolute left-4 top-8 z-0 h-20 w-20 rounded-full bg-custom-circle-small opacity-40 md:left-10 md:top-10 md:h-32 md:w-32 2xl:left-12 2xl:top-14"
                 whileHover={{ scale: 1.1, opacity: 0.6 }}
                 whileTap={{ scale: 0.95 }}
             />
 
             <motion.div
-                className="absolute -bottom-20 -right-20 z-0 h-52 w-52 rounded-full bg-custom-circle-small opacity-30 md:h-80 md:w-80 2xl:right-65"
+                className="absolute -bottom-20 -right-20 z-0 h-52 w-52 rounded-full bg-custom-circle-small opacity-30 md:h-80 md:w-80 2xl:right-4 2xl:bottom-4"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 0.3 }}
                 whileHover={{ scale: 1.05, opacity: 0.5 }}

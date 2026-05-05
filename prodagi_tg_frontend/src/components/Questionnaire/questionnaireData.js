@@ -21,7 +21,7 @@ export const questionnaireSections = [
                 name: 'telegram_link',
                 label: 'Никнейм в Телеграм для связи',
                 type: 'text',
-                placeholder: '@username',
+                placeholder: '@никнейм',
                 required: true
             },
             {

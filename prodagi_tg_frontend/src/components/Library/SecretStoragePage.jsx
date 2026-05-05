@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { motion } from 'motion/react';
 import {
     secretStorageCta,
@@ -41,6 +42,12 @@ const VideoSlot = ({ title, videoSrc, hint }) => {
             </div>
         </div>
     );
+};
+
+VideoSlot.propTypes = {
+    title: PropTypes.string.isRequired,
+    videoSrc: PropTypes.string,
+    hint: PropTypes.string
 };
 
 const SecretStoragePage = () => {

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 
@@ -56,6 +57,19 @@ const CardBanner = ({ title, description, to, iconType, titleClassName = '', des
             </div>
         </Link>
     );
+};
+
+Icon.propTypes = {
+    type: PropTypes.oneOf(['quiz', 'library', 'questionnaire']).isRequired
+};
+
+CardBanner.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
+    iconType: PropTypes.oneOf(['quiz', 'library', 'questionnaire']).isRequired,
+    titleClassName: PropTypes.string,
+    descriptionClassName: PropTypes.string
 };
 
 export default CardBanner;

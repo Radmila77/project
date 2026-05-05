@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
-use App\Mail\WorkshopAccessMail;
 use App\Models\Order;
 use App\Support\OrderTelegramNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -29,7 +27,7 @@ class OrderController extends Controller
             'status' => 'pending',
         ]);
 
-        $paymentUrl = $this->buildPaymentUrl($order, $tariffConfig['payform_url'], $tariffConfig['label']);
+        $paymentUrl = $this->buildPaymentUrl($tariffConfig['payform_url']);
 
         $order->update([
             'prodamus_payment_url' => $paymentUrl,
@@ -100,7 +98,6 @@ class OrderController extends Controller
                 'paid_at' => Carbon::now(),
             ]);
 
-            $this->sendWorkshopAccessEmail($order);
             $notifier->send($order->fresh(), 'paid');
         }
 
@@ -109,31 +106,9 @@ class OrderController extends Controller
         ]);
     }
 
-    public function testTelegram(OrderTelegramNotifier $notifier)
-    {
-        $order = new Order([
-            'name' => 'Тестовый покупатель',
-            'telegram' => '@test_buyer',
-            'phone' => '+79990000000',
-            'email' => 'test@example.com',
-            'tariff' => 'vip',
-        ]);
-
-        $notifier->send($order, 'paid');
-
-        return response()->json([
-            'message' => 'Тестовое уведомление в Telegram отправлено.',
-        ]);
-    }
-
-    private function buildPaymentUrl(Order $order, string $baseUrl, string $tariffLabel): string
+    private function buildPaymentUrl(string $baseUrl): string
     {
         return $baseUrl;
-    }
-
-    private function buildExternalOrderNumber(Order $order): string
-    {
-        return 'workshop-order-' . $order->id;
     }
 
     private function extractOrderId(?string $externalOrderNumber): ?int
@@ -173,18 +148,5 @@ class OrderController extends Controller
         }
 
         return null;
-    }
-
-    private function sendWorkshopAccessEmail(Order $order): void
-    {
-        $tariffConfig = config("services.prodamus.tariffs.{$order->tariff}");
-        $channelUrl = $tariffConfig['channel_url'] ?? null;
-        $tariffLabel = $tariffConfig['label'] ?? $order->tariff;
-
-        if (!$channelUrl) {
-            return;
-        }
-
-        Mail::to($order->email)->send(new WorkshopAccessMail($order, $channelUrl, $tariffLabel));
     }
 }
