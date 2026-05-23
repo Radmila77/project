@@ -62,6 +62,7 @@ export default function ReviewsHome() {
 
             if (validationErrors) {
                 setReviewFormErrors({
+                    consent: validationErrors.consent?.[0] || '',
                     name: validationErrors.name?.[0] || '',
                     rating: validationErrors.rating?.[0] || '',
                     description: validationErrors.description?.[0] || '',
@@ -170,7 +171,8 @@ export default function ReviewsHome() {
                         const displayText = isExpanded || !needTruncate
                             ? text
                             : text.slice(0, 120) + '...';
-                        const initial = review.name ? review.name.trim().charAt(0).toUpperCase() : 'К';
+                        const reviewAuthor = review.client?.name || 'Клиент';
+                        const initial = reviewAuthor.trim().charAt(0).toUpperCase();
                         const tariffTitle = review.tariff?.title;
 
                         return (
@@ -186,7 +188,7 @@ export default function ReviewsHome() {
                                         </div>
 
                                         <div>
-                                            <h4 className="font-roboto text-base font-bold text-custom-bkred">{review.name}</h4>
+                                            <h4 className="font-roboto text-base font-bold text-custom-bkred">{reviewAuthor}</h4>
                                             <p className="text-xs uppercase tracking-[0.18em] text-custom-red/70">
                                                 {tariffTitle ? `${tariffTitle} · отзыв клиента` : 'отзыв клиента'}
                                             </p>

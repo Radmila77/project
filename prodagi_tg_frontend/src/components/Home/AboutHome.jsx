@@ -1,6 +1,5 @@
 import React from 'react';
-import {ReactComponent as About} from 'src/assets/Mask group.svg';
-import {ReactComponent as Layer} from 'src/assets/Layer 1.svg';
+import aboutHome from 'src/assets/about home.png';
 import { Link } from 'react-router-dom';
 import SectionHeader from "../common/SectionHeader.jsx";
 const AboutHome = () => {
@@ -13,7 +12,7 @@ const AboutHome = () => {
                         <div className="lg:w-1/2">
                             <div className="max-w-[560px]">
                                 <p className="text-base md:text-lg font-semibold leading-tight text-black mb-5">
-                                    Помогаю коучам и психологам перейти от хаоса к понятной системе продаж в соцсетях
+                                    Помогаю коучам, психологам и экспертам в разных нишах перейти от хаоса к понятной системе продаж в соцсетях
                                 </p>
 
                                 <p className="text-base md:text-lg leading-8 text-custom-gray mb-8">
@@ -55,7 +54,7 @@ const AboutHome = () => {
                         <div className="relative flex flex-col items-center lg:w-1/2 lg:items-end">
                             <div className="relative w-full max-w-[400px] justify-center sm:flex lg:-top-10 lg:justify-end">
                                 <div className="mx-auto inline-block rounded-full border-2 border-custom-bkred p-3 sm:mx-0">
-                                <About
+                                <img src={aboutHome}
                                     className="relative z-10 w-full max-w-[297px] h-auto"
                                 />
                                 </div>

@@ -3,10 +3,13 @@ import PropTypes from 'prop-types';
 import { motion } from 'motion/react';
 import api from '../../api.js';
 
+const PERSONAL_DATA_CONSENT_URL = '/documents/personal-data-consent.pdf';
+
 const emptyValues = {
     name: '',
     telegram: '',
     email: '',
+    consent: false,
 };
 
 const WorkshopOrderModal = ({ plan, onClose }) => {
@@ -16,11 +19,11 @@ const WorkshopOrderModal = ({ plan, onClose }) => {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { name, type, value, checked } = event.target;
 
         setValues((current) => ({
             ...current,
-            [name]: value,
+            [name]: type === 'checkbox' ? checked : value,
         }));
 
         setErrors((current) => ({
@@ -56,6 +59,7 @@ const WorkshopOrderModal = ({ plan, onClose }) => {
                     name: validationErrors.name?.[0] || '',
                     telegram: validationErrors.telegram?.[0] || '',
                     email: validationErrors.email?.[0] || '',
+                    consent: validationErrors.consent?.[0] || '',
                     tariff: validationErrors.tariff?.[0] || '',
                 });
             } else {
@@ -72,11 +76,13 @@ const WorkshopOrderModal = ({ plan, onClose }) => {
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
+            onClick={onClose}
             className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#220b0e]/55 px-4 py-6"
         >
             <motion.div
                 initial={{ opacity: 0, y: 18, scale: 0.98 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
+                onClick={(event) => event.stopPropagation()}
                 className="my-auto w-full max-w-2xl rounded-[34px] border border-custom-red/10 bg-white p-5 shadow-[0_30px_80px_rgba(36,11,14,0.22)] md:p-8"
             >
                 <div className="flex items-start justify-between gap-4">
@@ -144,7 +150,7 @@ const WorkshopOrderModal = ({ plan, onClose }) => {
                                 name="telegram"
                                 value={values.telegram}
                                 onChange={handleChange}
-                                placeholder="@никнейм"
+                                placeholder="nickname или @nickname"
                                 className={`w-full rounded-[22px] border bg-white px-5 py-4 text-base text-custom-bkred outline-none transition-all ${
                                     errors.telegram
                                         ? 'border-[#c24646]/70 focus:border-[#c24646] focus:ring-4 focus:ring-[#c24646]/10'
@@ -171,6 +177,31 @@ const WorkshopOrderModal = ({ plan, onClose }) => {
                             />
                             {errors.email ? <p className="mt-2 text-sm text-custom-red">{errors.email}</p> : null}
                         </label>
+
+                        <label className="flex items-start gap-3 rounded-[22px] border border-black/8 bg-white px-5 py-4">
+                            <input
+                                type="checkbox"
+                                name="consent"
+                                checked={values.consent}
+                                onChange={handleChange}
+                                className="mt-1 h-5 w-5 rounded border-black/15 text-custom-red focus:ring-custom-red/20"
+                            />
+
+                            <span className="text-sm leading-relaxed text-custom-gray">
+                                Согласен(а) на обработку{' '}
+                                <a
+                                    href={PERSONAL_DATA_CONSENT_URL}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="font-medium text-custom-red underline underline-offset-2 transition-colors hover:text-custom-bkred"
+                                >
+                                    персональных данных
+                                </a>
+                                .
+                            </span>
+                        </label>
+
+                        {errors.consent ? <p className="-mt-2 text-sm text-custom-red">{errors.consent}</p> : null}
 
                         {submitError ? (
                             <div className="rounded-[20px] border border-[#c24646]/20 bg-[#fff3f3] px-4 py-4 text-sm text-[#9b3131]">

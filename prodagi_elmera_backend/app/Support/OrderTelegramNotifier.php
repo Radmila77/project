@@ -5,6 +5,8 @@ namespace App\Support;
 use App\Models\Order;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class OrderTelegramNotifier
 {
@@ -12,24 +14,58 @@ class OrderTelegramNotifier
     {
         $botToken = config('services.telegram.bot_token');
         $chatId = config('services.telegram.chat_id');
+        $order->loadMissing('client');
 
-        if (!$botToken || !$chatId || $this->alreadySent($order, $status)) {
+        if ($this->alreadySent($order, $status)) {
             return;
         }
 
-        $response = Http::asForm()->post("https://api.telegram.org/bot{$botToken}/sendMessage", [
-            'chat_id' => $chatId,
-            'text' => $this->buildMessage($order, $status),
-        ]);
+        if (!$botToken || !$chatId) {
+            Log::warning('Telegram notification skipped: bot token or chat id is missing.', [
+                'order_id' => $order->id,
+                'status' => $status,
+                'has_bot_token' => !empty($botToken),
+                'has_chat_id' => !empty($chatId),
+            ]);
 
-        if ($response->successful() && $order->exists) {
-            $field = $this->fieldForStatus($status);
+            return;
+        }
 
-            if ($field) {
-                $order->forceFill([
-                    $field => Carbon::now(),
-                ])->save();
-            }
+        try {
+            $response = Http::asForm()
+                ->connectTimeout(5)
+                ->timeout(8)
+                ->post("https://api.telegram.org/bot{$botToken}/sendMessage", [
+                    'chat_id' => $chatId,
+                    'text' => $this->buildMessage($order, $status),
+                ]);
+        } catch (Throwable $exception) {
+            Log::warning('Telegram notification failed', [
+                'order_id' => $order->id,
+                'status' => $status,
+                'message' => $exception->getMessage(),
+            ]);
+
+            return;
+        }
+
+        if (!$response->successful()) {
+            Log::warning('Telegram notification failed: unexpected API response.', [
+                'order_id' => $order->id,
+                'status' => $status,
+                'http_status' => $response->status(),
+                'response_body' => $response->body(),
+            ]);
+
+            return;
+        }
+
+        $field = $this->fieldForStatus($status);
+
+        if ($field && $order->exists) {
+            $order->forceFill([
+                $field => Carbon::now(),
+            ])->save();
         }
     }
 
@@ -51,10 +87,10 @@ class OrderTelegramNotifier
         $lines = [
             $statusTitle,
             '',
-            "Имя: {$order->name}",
+            'Имя: ' . ($order->client?->name ?: 'не указано'),
             'Телефон: ' . ($order->phone ?: 'не указан'),
-            'Telegram: ' . ($order->telegram ?: 'не указан'),
-            "Email: {$order->email}",
+            'Telegram: ' . ($order->client?->telegram ?: 'не указан'),
+            'Email: ' . ($order->client?->email ?: 'не указан'),
             "Тариф: {$tariffLabel}",
             "Статус: {$statusText}",
         ];

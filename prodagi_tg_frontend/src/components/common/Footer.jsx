@@ -7,7 +7,7 @@ import {ReactComponent as Mail} from 'src/assets/mail.svg';
 export default function Footer() {
     return (
         <footer className="bg-custom-bkred text-gray-200 py-12">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 gap-8 px-6 md:grid-cols-3">
+            <div className="container mx-auto grid grid-cols-1 gap-8 px-4 md:grid-cols-3">
 
                 <div className="text-center md:text-left">
                     <Link to="/" className="text-xl font-bold text-white">Воронки продаж с Эльмерой</Link>
@@ -35,9 +35,11 @@ export default function Footer() {
                 </div>
             </div>
 
-            <div className="mt-8 pt-4  text-center text-gray-400 text-xs flex flex-col md:flex-row justify-center gap-5">
-                <a href="#" className="hover:underline">Согласие на обработку персональных данных</a>
-                <a href="#" className="hover:underline">Договор оферта</a>
+            <div className="container mx-auto mt-8 flex flex-col justify-center gap-5 px-4 pt-4 text-center text-xs text-gray-400 md:flex-row">
+                <a href="/documents/personal-data-consent.pdf" target="_blank" rel="noreferrer" className="hover:underline">Согласие на обработку персональных данных</a>
+                <a href="/documents/privacy-policy.pdf" target="_blank" rel="noreferrer" className="hover:underline">Политика конфиденциальности</a>
+                <a href="/documents/advertising-consent.pdf" target="_blank" rel="noreferrer" className="hover:underline">Согласие на рекламную рассылку</a>
+                <a href="/documents/offer-agreement.pdf" target="_blank" rel="noreferrer" className="hover:underline">Договор оферта</a>
             </div>
         </footer>
     );

@@ -10,6 +10,7 @@ import Navbar from "./components/common/Navbar.jsx";
 import Footer from "./components/common/Footer.jsx";
 import ScrollToTop from "./components/common/ScrollToTop.jsx";
 import ContactLauncher from "./components/common/ContactLauncher.jsx";
+import CookieBanner from "./components/common/CookieBanner.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                     </Routes>
                 </div>
                 <Footer/>
+                <CookieBanner/>
                 <ContactLauncher/>
             </div>
         </BrowserRouter>

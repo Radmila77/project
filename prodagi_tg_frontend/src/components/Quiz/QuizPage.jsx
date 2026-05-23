@@ -6,6 +6,8 @@ import QuizProgress from './QuizProgress.jsx';
 import QuizQuestionCard from './QuizQuestionCard.jsx';
 import QuizResultCard from './QuizResultCard.jsx';
 
+const PERSONAL_DATA_CONSENT_URL = '/documents/personal-data-consent.pdf';
+
 const initialLeadForm = {
     name: '',
     telegram: '',
@@ -224,7 +226,7 @@ const QuizPage = () => {
 
     return (
         <main className="flex-1 bg-[#f6efec] px-4 py-10 md:py-14">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <motion.section
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -341,7 +343,7 @@ const QuizPage = () => {
                                                     name="telegram"
                                                     value={leadForm.telegram}
                                                     onChange={handleLeadFormChange}
-                                                    placeholder="@никнейм"
+                                                    placeholder="nickname или @nickname"
                                                     className={`w-full rounded-[20px] bg-[#fff8f6] px-5 py-4 text-base text-custom-bkred outline-none transition-colors placeholder:text-custom-gray/55 ${
                                                         leadFormErrors.telegram
                                                             ? 'border border-[#c24646]/70 focus:border-[#c24646]'
@@ -371,7 +373,16 @@ const QuizPage = () => {
                                                     className="mt-1 h-5 w-5 accent-custom-red"
                                                 />
                                                 <span className="text-sm leading-relaxed">
-                                                    Согласен(а) на обработку персональных данных.
+                                                    Согласен(а) на обработку{' '}
+                                                    <a
+                                                        href={PERSONAL_DATA_CONSENT_URL}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="font-medium text-custom-red underline underline-offset-2 transition-colors hover:text-custom-bkred"
+                                                    >
+                                                        персональных данных
+                                                    </a>
+                                                    .
                                                 </span>
                                             </label>
 

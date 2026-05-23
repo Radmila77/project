@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 const AboutFinalSection = () => {
     return (
         <section className="relative z-10 px-4 pt-10 pb-20">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

@@ -10,14 +10,6 @@ const Banner = () => {
 
             <div className="absolute inset-0 bg-custom-banner-gray -z-10"></div>
 
-            <div className="absolute right-0 top-24 z-0 hidden xl:block xl:top-auto xl:bottom-115 2xl:right-30 2xl:bottom-105">
-                <AnimatedSvg/>
-            </div>
-
-            <div className="absolute right-0 top-6 z-10 hidden xl:block xl:pr-10 2xl:right-40 2xl:pr-0">
-                <Elmera className="h-auto w-[400px] max-w-full" />
-            </div>
-
             <motion.div
                 className="absolute left-4 top-8 z-0 h-20 w-20 rounded-full bg-custom-circle-small opacity-40 md:left-10 md:top-10 md:h-32 md:w-32 2xl:left-12 2xl:top-14"
                 whileHover={{ scale: 1.1, opacity: 0.6 }}
@@ -44,6 +36,17 @@ const Banner = () => {
                     </p>
                 </div>
 
+                <div className="hidden w-full xl:flex xl:w-1/2 xl:justify-end">
+                    <div className="grid justify-items-center">
+                        <div className="col-start-1 row-start-1 z-0 pt-0 xl:w-[200px] 2xl:w-[200px] xl:-translate-y-20 xl:translate-x-25 2xl:-translate-y-20 2xl:translate-x-25">
+                            <AnimatedSvg />
+                        </div>
+
+                        <div className="col-start-2 row-start-1 z-10 xl:w-[340px] 2xl:w-[340px]">
+                            <Elmera className="h-auto w-full max-w-full" />
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div className="container relative z-20 mx-auto mt-10 mb-20 grid grid-cols-1 gap-6 px-4 font-roboto md:mt-12 md:grid-cols-2 md:[&>*:last-child]:col-span-2 md:[&>*:last-child]:mx-auto md:[&>*:last-child]:w-full md:[&>*:last-child]:max-w-[calc(50%-12px)] xl:mt-16 xl:grid-cols-3 xl:[&>*:last-child]:col-span-1 xl:[&>*:last-child]:max-w-none 2xl:mt-20">
@@ -64,7 +67,7 @@ const Banner = () => {
                 <CardBanner
                     to="/questionnaire"
                     iconType="questionnaire"
-                    title="Чек-ап продажи"
+                    title="Чек-ап продаж"
                     description="Оцените текущий уровень продаж и получите рекомендации"
                 />
             </div>

@@ -132,84 +132,82 @@ const CardCarousel = () => {
     return (
         <div ref={sectionRef} className="bg-custom-banner-gray overflow-hidden relative">
             <SectionHeader title="Программа практикума"/>
-            <div className="relative container mx-auto">
-
-
+            <div className="relative container mx-auto px-4">
                 <div className="relative">
-                <div className="overflow-hidden px-2 sm:px-4 xl:px-0">
-                    <div
-                        className="flex transition-transform duration-500 ease-out"
-                        style={{ transform: `translateX(-${safeCurrentIndex * (100 / visibleCount)}%)` }}
-                    >
-                        {modules.map((mod, idx) => (
-                            <motion.div
-                                key={mod.id}
-                                className="flex-shrink-0 p-2 sm:p-3"
-                                style={{ width: `${100 / visibleCount}%` }}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={isVisible ? { opacity: 1, y: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.3 + idx * 0.1 }}
-                                whileHover={{ y: -5 }}
-                            >
-                                <div className="flex h-full min-h-[420px] flex-col justify-between rounded-[24px] border border-red-100 bg-gray-50 p-5 shadow-lg transition-shadow hover:shadow-xl md:min-h-[460px]">
-                                    {mod.name && (
-                                        <h2 className="mb-3 text-lg font-semibold text-red-800 md:text-xl">
-                                            {mod.name}
-                                        </h2>
-                                    )}
+                    <div className="overflow-hidden px-2 sm:px-4 xl:px-0">
+                        <div
+                            className="flex transition-transform duration-500 ease-out"
+                            style={{ transform: `translateX(-${safeCurrentIndex * (100 / visibleCount)}%)` }}
+                        >
+                            {modules.map((mod, idx) => (
+                                <motion.div
+                                    key={mod.id}
+                                    className="flex-shrink-0 p-2 sm:p-3"
+                                    style={{ width: `${100 / visibleCount}%` }}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={isVisible ? { opacity: 1, y: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 0.3 + idx * 0.1 }}
+                                    whileHover={{ y: -5 }}
+                                >
+                                    <div className="flex h-full min-h-[420px] flex-col justify-between rounded-[24px] border border-red-100 bg-gray-50 p-5 shadow-lg transition-shadow hover:shadow-xl md:min-h-[460px]">
+                                        {mod.name && (
+                                            <h2 className="mb-3 text-lg font-semibold text-red-800 md:text-xl">
+                                                {mod.name}
+                                            </h2>
+                                        )}
 
-                                    <h3 className="mb-3 text-xl font-semibold text-red-800 md:text-2xl">
-                                        {mod.title}
-                                    </h3>
+                                        <h3 className="mb-3 text-xl font-semibold text-red-800 md:text-2xl">
+                                            {mod.title}
+                                        </h3>
 
-                                    <ul className="mb-3 flex-1 list-disc list-inside text-sm leading-7 text-gray-700 md:text-base">
-                                        {mod.lessons.map((lesson, idx) => (
-                                            <li key={idx}>{lesson}</li>
-                                        ))}
-                                    </ul>
+                                        <ul className="mb-3 flex-1 list-disc list-inside text-sm leading-7 text-gray-700 md:text-base">
+                                            {mod.lessons.map((lesson, idx) => (
+                                                <li key={idx}>{lesson}</li>
+                                            ))}
+                                        </ul>
 
-                                    {mod.bonus && (
-                                        <p className="mb-2 text-sm leading-6 text-green-700">
-                                            🎁 Бонус: {mod.bonus}
+                                        {mod.bonus && (
+                                            <p className="mb-2 text-sm leading-6 text-green-700">
+                                                🎁 Бонус: {mod.bonus}
+                                            </p>
+                                        )}
+
+                                        <p className="text-sm font-medium leading-7 text-gray-800 md:text-base">
+                                            {mod.result}
                                         </p>
-                                    )}
-
-                                    <p className="text-sm font-medium leading-7 text-gray-800 md:text-base">
-                                        {mod.result}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))}
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
+
+                    <button
+                        onClick={prevSlide}
+                        className="group absolute left-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-red-100 bg-white text-custom-red shadow-md transition-all duration-300 hover:bg-custom-red hover:text-white sm:-left-3 xl:-left-10 xl:h-12 xl:w-12"
+                        aria-label="Previous slide"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transition-transform group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    <button
+                        onClick={nextSlide}
+                        className="group absolute right-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-red-100 bg-white text-custom-red shadow-md transition-all duration-300 hover:bg-custom-red hover:text-white sm:-right-3 xl:-right-10 xl:h-12 xl:w-12"
+                        aria-label="Next slide"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
                 </div>
+
+                <div className="mt-10 flex justify-center pb-12">
+                    <Link to="/workshop"
+                          className="bg-custom-red hover:bg-custom-bkred text-white font-roboto font-medium py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg">
+                        Подробнее о практикуме
+
+                    </Link>
                 </div>
-
-                <button
-                    onClick={prevSlide}
-                    className="group absolute left-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-red-100 bg-white text-custom-red shadow-md transition-all duration-300 hover:bg-custom-red hover:text-white sm:-left-3 xl:-left-10 xl:h-12 xl:w-12"
-                    aria-label="Previous slide"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transition-transform group-hover:-translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button
-                    onClick={nextSlide}
-                    className="group absolute right-0 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-red-100 bg-white text-custom-red shadow-md transition-all duration-300 hover:bg-custom-red hover:text-white sm:-right-3 xl:-right-10 xl:h-12 xl:w-12"
-                    aria-label="Next slide"
-                >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 transition-transform group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            </div>
-
-            <div className="flex justify-center mt-10 pb-12">
-                <Link to="/workshop"
-                      className="bg-custom-red hover:bg-custom-bkred text-white font-roboto font-medium py-3 px-8 rounded-full transition transform hover:scale-105 shadow-lg">
-                    Подробнее о практикуме
-
-                </Link>
             </div>
         </div>
     );

@@ -19,7 +19,6 @@ const plans = [
         links: [
             {
                 label: "Перейти к оплате",
-                href: "#",
                 style: "bg-custom-bkred text-white hover:bg-custom-red"
             }
         ]
@@ -41,7 +40,6 @@ const plans = [
         links: [
             {
                 label: "Перейти к оплате",
-                href: "#",
                 style: "bg-custom-red text-white hover:bg-custom-bkred"
             },
 
@@ -60,7 +58,7 @@ const WorkshopPricing = () => {
                 <div className="absolute bottom-0 left-0 h-64 w-64 rounded-full bg-white/10 blur-3xl"></div>
             </div>
 
-            <div className="container mx-auto relative z-10">
+            <div className="container mx-auto relative z-10 px-4">
                 <div className="max-w-3xl mx-auto text-center mb-14">
                     <p className="mb-4 text-sm font-exo font-bold uppercase tracking-[0.24em] md:tracking-[0.32em] text-white/60">
                         Тарифы участия

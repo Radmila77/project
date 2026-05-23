@@ -53,7 +53,7 @@ VideoSlot.propTypes = {
 const SecretStoragePage = () => {
     return (
         <main className="bg-[#f8f2ef] px-4 py-6 md:py-12">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <motion.section
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

@@ -35,7 +35,7 @@ const CardBanner = ({ title, description, to, iconType, titleClassName = '', des
         <Link to={to} className="group relative block h-full">
             <div className="relative flex h-full min-h-[260px] w-full flex-col items-start justify-start overflow-hidden rounded-2xl border border-red-100 bg-white p-6 shadow-sm transition-all duration-500 ease-in-out group-hover:scale-[1.02] group-hover:shadow-2xl md:min-h-64 md:p-8">
 
-                <div className="absolute inset-0 border-2 border-custom-red opacity-0 rotate-12 transition-all duration-500 ease-in-out group-hover:inset-4 group-hover:opacity-100 group-hover:rotate-0 z-0" />
+                <div className="pointer-events-none absolute inset-0 z-0 rounded-2xl border-2 border-custom-red opacity-0 rotate-12 transition-all duration-500 ease-in-out group-hover:inset-4 group-hover:opacity-100 group-hover:rotate-0" />
 
                 <div className="relative z-10 flex flex-col items-start text-left">
 

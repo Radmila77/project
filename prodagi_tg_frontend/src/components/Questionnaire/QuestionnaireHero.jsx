@@ -5,7 +5,7 @@ import { questionnaireIntro } from './questionnaireData.js';
 const QuestionnaireHero = () => {
     return (
         <section className="relative px-4 pt-10 pb-8">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

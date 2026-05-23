@@ -3,11 +3,14 @@ import PropTypes from 'prop-types';
 import { motion } from 'motion/react';
 import ReviewStarsInput from './ReviewStarsInput.jsx';
 
+const PERSONAL_DATA_CONSENT_URL = '/documents/personal-data-consent.pdf';
+
 const initialValues = {
     name: '',
     tariff_id: '',
     rating: 0,
-    description: ''
+    description: '',
+    consent: false
 };
 
 const tariffOptions = [
@@ -19,11 +22,11 @@ const ReviewForm = ({ errors = {}, onClose, onFieldChange, onSubmit }) => {
     const [values, setValues] = useState(initialValues);
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { name, type, value, checked } = event.target;
 
         setValues((current) => ({
             ...current,
-            [name]: value
+            [name]: type === 'checkbox' ? checked : value
         }));
 
         onFieldChange?.(name);
@@ -155,6 +158,35 @@ const ReviewForm = ({ errors = {}, onClose, onFieldChange, onSubmit }) => {
                     ) : null}
                 </label>
 
+                <label className="flex items-start gap-3 rounded-[22px] border border-black/8 bg-white px-5 py-4">
+                    <input
+                        type="checkbox"
+                        name="consent"
+                        checked={values.consent}
+                        onChange={handleChange}
+                        className="mt-1 h-5 w-5 rounded border-black/15 text-custom-red focus:ring-custom-red/20"
+                    />
+
+                    <span className="text-sm leading-relaxed text-custom-gray">
+                        Согласен(а) на обработку{' '}
+                        <a
+                            href={PERSONAL_DATA_CONSENT_URL}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="font-medium text-custom-red underline underline-offset-2 transition-colors hover:text-custom-bkred"
+                        >
+                            персональных данных
+                        </a>
+                        .
+                    </span>
+                </label>
+
+                {errors.consent ? (
+                    <p className="-mt-3 text-sm leading-relaxed text-[#c24646]">
+                        {errors.consent}
+                    </p>
+                ) : null}
+
                 <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                     <button
                         type="submit"
@@ -170,6 +202,7 @@ const ReviewForm = ({ errors = {}, onClose, onFieldChange, onSubmit }) => {
 
 ReviewForm.propTypes = {
     errors: PropTypes.shape({
+        consent: PropTypes.string,
         description: PropTypes.string,
         name: PropTypes.string,
         rating: PropTypes.string,

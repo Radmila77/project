@@ -63,7 +63,7 @@ export default function NeuroHome() {
     return (
         <section className="py-24 bg-custom-banner-gray relative overflow-hidden">
             <SectionHeader title="Нейроклуб"/>
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto relative z-10 px-6">
                 <div className="mb-16 mt-8">
                     <motion.div
                         className="flex items-start gap-6"

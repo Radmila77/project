@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\OrderRequest;
 use App\Models\Order;
+use App\Support\ClientResolver;
 use App\Support\OrderTelegramNotifier;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Arr;
 
 class OrderController extends Controller
 {
-    public function store(OrderRequest $request, OrderTelegramNotifier $notifier)
+    public function store(OrderRequest $request, OrderTelegramNotifier $notifier, ClientResolver $clientResolver)
     {
         $validated = $request->validated();
         $tariffConfig = config("services.prodamus.tariffs.{$validated['tariff']}");
@@ -22,12 +24,19 @@ class OrderController extends Controller
             ], 500);
         }
 
+        $client = $clientResolver->resolve(
+            $validated['name'],
+            $validated['telegram'],
+            $validated['email'],
+        );
+
         $order = Order::create([
-            ...$validated,
+            ...Arr::except($validated, ['name', 'telegram', 'email', 'consent']),
+            'client_id' => $client->id,
             'status' => 'pending',
         ]);
 
-        $paymentUrl = $this->buildPaymentUrl($tariffConfig['payform_url']);
+        $paymentUrl = $this->buildPaymentUrl($tariffConfig['payform_url'], $order->id);
 
         $order->update([
             'prodamus_payment_url' => $paymentUrl,
@@ -41,7 +50,7 @@ class OrderController extends Controller
         ]);
     }
 
-    public function webhook(Request $request, OrderTelegramNotifier $notifier)
+    public function webhook(Request $request, OrderTelegramNotifier $notifier, ClientResolver $clientResolver)
     {
         $payload = $request->all();
         $externalOrderNumber = $payload['order_num']
@@ -65,7 +74,14 @@ class OrderController extends Controller
 
         if (!$order) {
             $order = Order::query()
-                ->when($customerEmail, fn ($query) => $query->where('email', $customerEmail))
+                ->with('client')
+                ->when(
+                    $customerEmail,
+                    fn ($query) => $query->whereHas(
+                        'client',
+                        fn ($clientQuery) => $clientQuery->where('email', $customerEmail)
+                    )
+                )
                 ->when($tariff, fn ($query) => $query->where('tariff', $tariff))
                 ->where('status', 'pending')
                 ->latest('id')
@@ -73,11 +89,11 @@ class OrderController extends Controller
         }
 
         if (!$order && $customerEmail && $tariff) {
+            $client = $clientResolver->resolve('Покупатель Prodamus', null, $customerEmail);
+
             $order = Order::create([
-                'name' => 'Покупатель Prodamus',
-                'telegram' => '',
+                'client_id' => $client->id,
                 'phone' => $customerPhone,
-                'email' => $customerEmail,
                 'tariff' => $tariff,
                 'status' => 'pending',
             ]);
@@ -90,9 +106,15 @@ class OrderController extends Controller
         }
 
         if ($order->status !== 'paid') {
+            $client = $clientResolver->resolve(
+                $order->client?->name,
+                $order->client?->telegram,
+                $customerEmail ?: $order->client?->email,
+            );
+
             $order->update([
+                'client_id' => $client->id,
                 'phone' => $customerPhone ?: $order->phone,
-                'email' => $customerEmail ?: $order->email,
                 'tariff' => $tariff ?: $order->tariff,
                 'status' => 'paid',
                 'paid_at' => Carbon::now(),
@@ -106,9 +128,20 @@ class OrderController extends Controller
         ]);
     }
 
-    private function buildPaymentUrl(string $baseUrl): string
+    private function buildPaymentUrl(string $baseUrl, int $orderId): string
     {
-        return $baseUrl;
+        $separator = str_contains($baseUrl, '?') ? '&' : '?';
+        $orderNumber = sprintf('workshop-order-%d', $orderId);
+
+        return sprintf(
+            '%s%s%s#%s',
+            $baseUrl,
+            $separator,
+            http_build_query([
+                'order_num' => $orderNumber,
+            ]),
+            $orderNumber,
+        );
     }
 
     private function extractOrderId(?string $externalOrderNumber): ?int

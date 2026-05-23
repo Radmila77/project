@@ -6,7 +6,7 @@ import { trustPoints } from './aboutData.js';
 const AboutEducationTrustSection = () => {
     return (
         <section className="relative z-10 px-4 py-10">
-            <div className="container mx-auto grid lg:grid-cols-[0.92fr_1.08fr] gap-12 items-start">
+            <div className="container mx-auto grid gap-12 px-4 lg:grid-cols-[0.92fr_1.08fr] items-start">
                 <motion.div
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}

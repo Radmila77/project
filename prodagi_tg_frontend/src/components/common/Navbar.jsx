@@ -23,7 +23,7 @@ const Navbar = () => {
 
     return (
         <nav className="sticky top-0 z-50 border-b border-custom-red/20 bg-white/50 backdrop-blur-sm">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <div className="flex h-20 items-center justify-between px-4">
                     <div className="flex-shrink-0">
                         <Link to="/" className="block">

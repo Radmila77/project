@@ -1,10 +1,13 @@
 export const SECRET_STORAGE_BOT_URL = 'https://t.me/m/EFuP-_5QMzNi';
 
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, '') || '/api';
+const storageBaseUrl = apiBaseUrl.replace(/\/api$/, '');
+
 export const secretStorageVideos = [
     {
         id: 'game-mechanics',
         title: 'Игровая механика для сбора целевых заявок',
-        videoSrc: 'http://127.0.0.1:8000/storage/videos/secret-storage/game-mechanic.mp4',
+        videoSrc: `${storageBaseUrl}/storage/videos/secret-storage/game-mechanic.mp4`,
         bullets: [
             'Виды игровых механик',
             'Схемы и нюансы',
@@ -20,7 +23,7 @@ export const secretStorageVideos = [
     {
         id: 'channel-analysis',
         title: 'Обучаем нейросеть. Анализ телеграм-канала с помощью нейросети',
-        videoSrc: 'http://127.0.0.1:8000/storage/videos/secret-storage/ai.mp4',
+        videoSrc: `${storageBaseUrl}/storage/videos/secret-storage/ai.mp4`,
         description:
             'Готовый промт, с которым можно разобрать канал, усилить смыслы, контент и воронки под продажи.',
         promptTitle: 'Промт для анализа телеграм-канала',
@@ -32,7 +35,7 @@ export const secretStorageVideos = [
     {
         id: 'neural-photoshoot',
         title: 'Фотосессия с помощью нейросетей',
-        videoSrc: 'http://127.0.0.1:8000/storage/videos/secret-storage/photo-ai.mp4',
+        videoSrc: `${storageBaseUrl}/storage/videos/secret-storage/photo-ai.mp4`,
         description:
             'Инструкция, как подготовить фото, загрузить их в бота и получить готовые материалы для контента.',
         bullets: [
@@ -54,7 +57,7 @@ export const secretStorageVideos = [
     {
         id: 'welcome-message',
         title: 'Простая воронка через приветственное сообщение',
-        videoSrc: 'http://127.0.0.1:8000/storage/videos/secret-storage/voronka.mp4',
+        videoSrc: `${storageBaseUrl}/storage/videos/secret-storage/voronka.mp4`,
         bullets: [
             'Готовые примеры',
             'Структура приветственного сообщения',

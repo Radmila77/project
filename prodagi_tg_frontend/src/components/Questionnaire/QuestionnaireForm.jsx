@@ -77,7 +77,7 @@ const QuestionnaireForm = ({ errors = {}, isSubmitted, isSubmitting, onFieldChan
 
     return (
         <section className="relative px-4 pb-12 pt-4 md:pb-18">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <div className="grid gap-8 lg:grid-cols-[0.34fr_0.66fr]">
                     <motion.aside
                         initial={{ opacity: 0, y: 24 }}

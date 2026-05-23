@@ -4,7 +4,7 @@ import { motion } from "motion/react";
 const WorkshopHero = () => {
     return (
         <section className="relative z-10 px-4 pt-6 md:pt-8">
-            <div className="container mx-auto">
+            <div className="container mx-auto px-4">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}

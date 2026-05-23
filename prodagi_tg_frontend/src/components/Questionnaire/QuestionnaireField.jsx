@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const PERSONAL_DATA_CONSENT_URL = '/documents/personal-data-consent.pdf';
+
 const baseInputClassName =
     'w-full rounded-[22px] border border-black/8 bg-white px-5 py-4 text-base text-custom-bkred outline-none transition-all placeholder:text-custom-gray/45 focus:border-custom-red/45 focus:ring-4 focus:ring-custom-red/8';
 
@@ -134,6 +136,23 @@ const QuestionnaireField = ({ field, value, error, onChange, onCheckboxGroupChan
     }
 
     if (field.type === 'checkbox') {
+        const checkboxLabelContent = field.name === 'consent_personal_data'
+            ? (
+                <>
+                    Я согласен(а) на обработку{' '}
+                    <a
+                        href={PERSONAL_DATA_CONSENT_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="font-medium text-custom-red underline underline-offset-2 transition-colors hover:text-custom-bkred"
+                    >
+                        персональных данных
+                    </a>
+                    {field.required ? <span className="whitespace-nowrap text-custom-red"> *</span> : null}
+                </>
+            )
+            : labelContent;
+
         return (
             <label className={`flex items-start gap-3 rounded-[22px] bg-white px-4 py-4 ${
                 error ? 'border border-[#c24646]/70' : 'border border-black/8'
@@ -145,7 +164,7 @@ const QuestionnaireField = ({ field, value, error, onChange, onCheckboxGroupChan
                     onChange={onChange}
                     className="mt-1 h-4 w-4 accent-custom-red"
                 />
-                <span className="text-custom-gray">{labelContent}</span>
+                <span className="text-custom-gray">{checkboxLabelContent}</span>
                 {error ? <span className="ml-auto text-sm text-custom-red">{error}</span> : null}
             </label>
         );

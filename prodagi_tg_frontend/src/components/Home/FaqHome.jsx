@@ -76,7 +76,7 @@ const FaqHome = () => {
     return (
         <section id="faq" className="bg-[#fffdfd] pb-14">
             <SectionHeader title="Вопросы и ответы"/>
-            <div className="container mx-auto flex flex-col px-4 md:px-0 mb-10">
+            <div className="container mx-auto mb-10 flex flex-col px-4 md:px-0">
             {faqs.map((faq, index) => (
                 <div
                     className={`mb-4 w-full cursor-pointer rounded-3xl border p-5 transition-all duration-300 ${
